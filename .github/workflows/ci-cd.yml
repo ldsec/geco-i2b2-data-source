@@ -18,16 +18,15 @@ jobs:
             ${{ secrets.SPINDLE_SSH_DEPLOY_KEY }}
             ${{ secrets.GECO_SSH_DEPLOY_KEY }}
 
-      - name: TEST cloning spindle
-        run: git clone git@github.com:ldsec/spindle.git
-
-      - name: TEST cloning geco
-        run: git clone git@github.com:ldsec/geco.git
-
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
           go-version: '^1.17'
+
+      - name: Setup Git and Golang environment for private repositories
+        run: |
+          git config --global url."git@github.com:".insteadOf "https://github.com/"
+          go env -w GOPRIVATE=github.com/ldsec
 
       - name: Checkout code
         uses: actions/checkout@v2
@@ -41,10 +40,6 @@ jobs:
           pushd third_party/geco && ./scripts/version.sh && popd
           env
 
-      - name: Setup Git and Golang environment for private repositories
-        run: |
-          git config --global url."git@github.com:".insteadOf "https://github.com/"
-          go env -w GOPRIVATE=github.com/ldsec/geco,github.com/ldsec/spindle,github.com/ldsec/geco-i2b2-data-source
 
       - name: Generate GeCo Swagger files
         run: make geco-swagger-gen
