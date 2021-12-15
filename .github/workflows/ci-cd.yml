@@ -31,6 +31,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
+          ssh-key: ${{ secrets.GECO_SSH_DEPLOY_KEY }}
           submodules: true
 
       - name: Environment
