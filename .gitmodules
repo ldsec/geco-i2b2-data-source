@@ -1,3 +1,4 @@
 [submodule "third_party/geco"]
 	path = third_party/geco
-	url = git@github.com:ldsec/geco.git
+	url = https://github.com:ldsec/geco.git
+	branch = dev
