@@ -11,6 +11,16 @@ jobs:
 #      PUSH: ${{ github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/tags') }} todo: also put if manual trigger
 
     steps:
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '^1.17'
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: false
+
       - name: Setup SSH deploy key for private repositories
         uses: webfactory/ssh-agent@v0.5.4
         with:
@@ -18,20 +28,8 @@ jobs:
             ${{ secrets.SPINDLE_SSH_DEPLOY_KEY }}
             ${{ secrets.GECO_SSH_DEPLOY_KEY }}
 
-      - name: Set up Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: '^1.17'
-
-      - name: Setup Git and Golang environment for private repositories
-        run: |
-          git config --global url."git@github.com:".insteadOf "https://github.com/"
-          go env -w GOPRIVATE=github.com/ldsec
-
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          submodules: true
+      - name: Clone geco
+        run: git clone git@github.com:ldsec/geco.git third_party/geco
 
       - name: Environment
         run: |
@@ -40,6 +38,10 @@ jobs:
           pushd third_party/geco && ./scripts/version.sh && popd
           env
 
+      - name: Setup Git and Golang environment for private repositories
+        run: |
+          git config --global url."git@github.com:".insteadOf "https://github.com/"
+          go env -w GOPRIVATE=github.com/ldsec
 
       - name: Generate GeCo Swagger files
         run: make geco-swagger-gen
