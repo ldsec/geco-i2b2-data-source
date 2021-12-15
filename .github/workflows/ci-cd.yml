@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Setup SSH deploy key for private repositories
-        uses: webfactory/ssh-agent@v0.4.1
+        uses: webfactory/ssh-agent@v0.5.4
         with:
           ssh-private-key: |
             ${{ secrets.SPINDLE_SSH_DEPLOY_KEY }}
