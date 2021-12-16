@@ -26,7 +26,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          token: ${{ secrets.LDS_PKG_PAT }}
+          ssh-key: ${{ secrets.GECO_SSH_DEPLOY_KEY }}
           submodules: true
 
       - name: Environment
