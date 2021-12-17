@@ -18,8 +18,6 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          submodules: false
 
       - name: Setup SSH deploy key for private repositories
         uses: webfactory/ssh-agent@v0.5.4
@@ -28,8 +26,8 @@ jobs:
             ${{ secrets.SPINDLE_SSH_DEPLOY_KEY }}
             ${{ secrets.GECO_SSH_DEPLOY_KEY }}
 
-      - name: Clone geco
-        run: git clone git@github.com:ldsec/geco.git third_party/geco
+      - name: Get submodules
+        run: git submodule update --init --recursive
 
       - name: Environment
         run: |
