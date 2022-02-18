@@ -7,9 +7,9 @@ It is configurable through environment variables and easily customisable, either
 tweaks to the data loaded. 
 
 ## Source code organization
-- `patches/`: (see README.md)[patches/README.md]
-- `pre-init-scripts/`: (see README.md)[pre-init-scripts/README.md]
-- `sql/`: (see README.md)[sql/README.md]
+- `patches/`: [see README.md](patches/README.md)
+- `pre-init-scripts/`: [see README.md](pre-init-scripts/README.md)
+- `sql/`: [see README.md](sql/README.md)
 - `docker-entrypoint.sh`: entrypoint for the docker container, it waits for the
   database to be available and then triggers the data loading if needed before starting i2b2
 - `Dockerfile`: the dockerfile defining the image
